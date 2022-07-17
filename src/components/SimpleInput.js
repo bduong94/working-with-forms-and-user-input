@@ -14,7 +14,7 @@ const SimpleInput = (props) => {
   const enteredEmailIsValid = enteredEmail.includes("@");
   const emailInputIsInvalid = !enteredEmailIsValid && enteredEmailIsTouched;
 
-  const formIsValid = enteredNameIsValid;
+  const formIsValid = enteredNameIsValid && enteredEmailIsValid;
 
   //Handlers for Name
   const nameInputChangeHandler = (e) => {
