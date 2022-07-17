@@ -2,12 +2,19 @@ import { useState } from "react";
 
 const SimpleInput = (props) => {
   const [enteredName, setEnteredName] = useState("");
-  const [enteredNameTouched, setEnteredNameIsTouched] = useState(false);
+  const [enteredNameIsTouched, setEnteredNameIsTouched] = useState(false);
+  const [enteredEmail, setEnteredEmail] = useState("");
+  const [enteredEmailIsTouched, setEnteredEmailIsTouched] = useState(false);
 
+  //Validations for Name
   const enteredNameIsValid = enteredName.trim() !== "";
-  const nameInputIsInvalid = !enteredNameIsValid && enteredNameTouched;
+  const nameInputIsInvalid = !enteredNameIsValid && enteredNameIsTouched;
+
+  //Validations for Email
+
   const formIsValid = enteredNameIsValid;
 
+  //Handlers for Name
   const nameInputChangeHandler = (e) => {
     setEnteredName(e.target.value);
   };
@@ -16,9 +23,19 @@ const SimpleInput = (props) => {
     setEnteredNameIsTouched(true);
   };
 
+  //Handlers for Email
+  const emailInputChangeHandler = (e) => {
+    setEnteredEmail(e.target.value);
+  };
+
+  const emailInputBlurHandler = (e) => {
+    setEnteredEmailIsTouched(true);
+  };
+
   const formSubmissionHandler = (e) => {
     e.preventDefault();
     setEnteredNameIsTouched(true);
+    setEnteredEmailIsTouched(true);
 
     if (!enteredNameIsValid) {
       return;
@@ -50,7 +67,12 @@ const SimpleInput = (props) => {
       </div>
       <div className={emailInputClasses}>
         <label htmlFor="email">E-mail</label>
-        <input type="text" id="email" />
+        <input
+          type="text"
+          id="email"
+          onChange={emailInputChangeHandler}
+          onBlur={emailInputBlurHandler}
+        />
       </div>
       <div className="form-actions">
         <button disabled={!formIsValid}>Submit</button>
