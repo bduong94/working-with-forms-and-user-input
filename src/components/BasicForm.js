@@ -1,15 +1,6 @@
 import useInput from "../hooks/use-input";
 
 const BasicForm = (props) => {
-  // return {
-  //   value: enteredValue,
-  //   isValid: valueIsValid,
-  //   hasError,
-  //   valueChangeHandler,
-  //   inputBlurHandler,
-  //   reset,
-  // };
-
   const {
     value: enteredFirstName,
     isValid: enteredFirstNameIsValid,
@@ -19,19 +10,37 @@ const BasicForm = (props) => {
     reset: firstNameInputReset,
   } = useInput((value) => value.trim() !== "");
 
-  const firstNameClass = firstNameHasError
-    ? "form-control invalid"
-    : "form-control";
+  const {
+    value: enteredLastName,
+    isValid: enteredLastNameIsValid,
+    hasError: lastNameHasError,
+    valueChangeHandler: lastNameChangeHandler,
+    inputBlurHandler: lastNameBlurHandler,
+    reset: lastNameInputReset,
+  } = useInput((value) => value.trim() !== "");
+
+  const disableButton = !enteredFirstNameIsValid && !enteredLastNameIsValid;
 
   const onSubmitHandler = (e) => {
     e.preventDefault();
 
-    if (!enteredFirstNameIsValid) {
+    if (!enteredFirstNameIsValid & !enteredLastNameIsValid) {
       return;
     }
 
     firstNameInputReset();
+    lastNameInputReset();
   };
+
+  //Classes for Inputs
+  const firstNameClass = firstNameHasError
+    ? "form-control invalid"
+    : "form-control";
+
+  //Classes for Inputs
+  const lastNameClass = lastNameHasError
+    ? "form-control invalid"
+    : "form-control";
 
   return (
     <form onSubmit={onSubmitHandler}>
@@ -49,9 +58,18 @@ const BasicForm = (props) => {
             <p className="error-text">First Name must not be empty!</p>
           )}
         </div>
-        <div className="form-control">
+        <div className={lastNameClass}>
           <label htmlFor="name">Last Name</label>
-          <input type="text" id="name" />
+          <input
+            type="text"
+            id="name"
+            onChange={lastNameChangeHandler}
+            onBlur={lastNameBlurHandler}
+            value={enteredLastName}
+          />
+          {lastNameHasError && (
+            <p className="error-text">Last Name must not be empty!</p>
+          )}
         </div>
       </div>
       <div className="form-control">
@@ -59,7 +77,7 @@ const BasicForm = (props) => {
         <input type="text" id="name" />
       </div>
       <div className="form-actions">
-        <button>Submit</button>
+        <button disabled={disableButton}>Submit</button>
       </div>
     </form>
   );
