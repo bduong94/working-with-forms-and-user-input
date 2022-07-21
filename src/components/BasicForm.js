@@ -19,7 +19,17 @@ const BasicForm = (props) => {
     reset: lastNameInputReset,
   } = useInput((value) => value.trim() !== "");
 
-  const disableButton = !enteredFirstNameIsValid && !enteredLastNameIsValid;
+  const {
+    value: enteredEmail,
+    isValid: enteredEmailIsValid,
+    hasError: emailHasError,
+    valueChangeHandler: emailChangeHandler,
+    inputBlurHandler: emailBlurHandler,
+    reset: emailInputReset,
+  } = useInput((value) => value.includes("@"));
+
+  const disableButton =
+    !enteredFirstNameIsValid && !enteredLastNameIsValid && !enteredEmailIsValid;
 
   const onSubmitHandler = (e) => {
     e.preventDefault();
@@ -37,10 +47,11 @@ const BasicForm = (props) => {
     ? "form-control invalid"
     : "form-control";
 
-  //Classes for Inputs
   const lastNameClass = lastNameHasError
     ? "form-control invalid"
     : "form-control";
+
+  const emailClass = emailHasError ? "form-control invalid" : "form-control";
 
   return (
     <form onSubmit={onSubmitHandler}>
@@ -75,6 +86,9 @@ const BasicForm = (props) => {
       <div className="form-control">
         <label htmlFor="name">E-Mail Address</label>
         <input type="text" id="name" />
+        {emailHasError && (
+          <p className="error-text">E-mail must include an @!</p>
+        )}
       </div>
       <div className="form-actions">
         <button disabled={disableButton}>Submit</button>
