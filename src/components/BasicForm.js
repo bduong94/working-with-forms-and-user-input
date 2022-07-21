@@ -83,7 +83,7 @@ const BasicForm = (props) => {
           )}
         </div>
       </div>
-      <div className="form-control">
+      <div className={emailClass}>
         <label htmlFor="name">E-Mail Address</label>
         <input type="text" id="name" />
         {emailHasError && (
