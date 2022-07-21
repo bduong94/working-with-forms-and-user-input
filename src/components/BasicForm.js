@@ -29,7 +29,7 @@ const BasicForm = (props) => {
   } = useInput((value) => value.includes("@"));
 
   const disableButton =
-    !enteredFirstNameIsValid && !enteredLastNameIsValid && !enteredEmailIsValid;
+    !enteredFirstNameIsValid || !enteredLastNameIsValid || !enteredEmailIsValid;
 
   const onSubmitHandler = (e) => {
     e.preventDefault();
