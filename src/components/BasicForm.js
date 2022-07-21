@@ -40,6 +40,7 @@ const BasicForm = (props) => {
 
     firstNameInputReset();
     lastNameInputReset();
+    emailInputReset();
   };
 
   //Classes for Inputs
@@ -85,7 +86,13 @@ const BasicForm = (props) => {
       </div>
       <div className={emailClass}>
         <label htmlFor="name">E-Mail Address</label>
-        <input type="text" id="name" />
+        <input
+          type="text"
+          id="name"
+          onChange={emailChangeHandler}
+          onBlur={emailBlurHandler}
+          value={enteredEmail}
+        />
         {emailHasError && (
           <p className="error-text">E-mail must include an @!</p>
         )}
